@@ -1,23 +1,19 @@
-Aqui está uma versão aprimorada da documentação sobre **Testes de Robustez (Endurance Testing)**:
+Aqui está uma versão aprimorada da documentação sobre **Testes de ### 7. **Testes de Resiliência (Endurance Testing): Testando o Desempenho ao Longo do Tempo**
 
----
-
-### 7. **Testes de Robustez (Endurance Testing): Testando o Desempenho ao Longo do Tempo**
-
-- **Objetivo:** O principal objetivo dos testes de robustez é avaliar a capacidade do sistema de suportar uma carga constante e estável ao longo de um longo período, geralmente por várias horas ou até dias. Este teste é essencial para identificar degradações graduais no desempenho, como aumento de latência, falhas no sistema ou sobrecarga de recursos (memória, CPU, banco de dados, etc.) que podem ocorrer após uma exposição prolongada à carga.
+- **Objetivo:** O principal objetivo dos testes de resiliência é avaliar a capacidade do sistema de suportar uma carga constante e estável ao longo de um longo período, geralmente por várias horas ou até dias. Este teste é essencial para identificar degradações graduais no desempenho, como aumento de latência, falhas no sistema ou sobrecarga de recursos (memória, CPU, banco de dados, etc.) que podem ocorrer após uma exposição prolongada à carga.
 
 - **Conteúdo:**
-  - Definição dos testes de robustez e sua importância na avaliação da estabilidade e confiabilidade de sistemas que operam em ambiente de carga contínua.
+  - Definição dos testes de resiliência e sua importância na avaliação da estabilidade e confiabilidade de sistemas que operam em ambiente de carga contínua.
   - Como configurar e realizar testes para simular uma carga estável por períodos prolongados.
   - Monitoramento de métricas críticas, como latência, taxa de erro e utilização de recursos, para identificar potenciais gargalos ou falhas que possam surgir com o tempo.
 
-- **Exemplo:** Um exemplo clássico de teste de robustez seria simular uma aplicação de e-commerce operando com tráfego constante durante um dia de vendas de alta demanda. O objetivo seria verificar se o sistema mantém sua performance ao longo de várias horas de operação sem falhas ou degradação no tempo de resposta.
+- **Exemplo:** Um exemplo clássico de teste de resiliência seria simular uma aplicação de e-commerce operando com tráfego constante durante um dia de vendas de alta demanda. O objetivo seria verificar se o sistema mantém sua performance ao longo de várias horas de operação sem falhas ou degradação no tempo de resposta.
 
 ---
 
-## **Estágios do Teste de Robustez**
+## **Estágios do Teste de Resiliência**
 
-O teste de robustez envolve simulações de carga prolongada e contínua, sendo dividido em estágios específicos para observar como o sistema se comporta e mantém sua performance ao longo do tempo. 
+O teste de resiliência envolve simulações de carga prolongada e contínua, sendo dividido em estágios específicos para observar como o sistema se comporta e mantém sua performance ao longo do tempo. 
 
 ---
 
@@ -42,7 +38,7 @@ O teste de robustez envolve simulações de carga prolongada e contínua, sendo 
 
 ---
 
-### **Resumo dos Estágios do Teste de Robustez:**
+### **Resumo dos Estágios do Teste de Resiliência:**
 
 1. **Ramp-up Inicial:** Aumento gradual da carga até 70 usuários em 60 segundos, preparando o sistema para o teste contínuo.
 2. **Carga Estável Inicial:** Manutenção de 70 usuários simultâneos por 60 minutos, simulando um tráfego constante e sustentado.
@@ -65,6 +61,6 @@ O teste de robustez envolve simulações de carga prolongada e contínua, sendo 
 
 ### **Links:**
 
-- [**Link para o Script de Teste de Robustez:**](../testes/rbustez.js)
-- [**Link para o Gráfico de Resultados:**](../chart/4-robustez.html)
+- [**Link para o Script de Teste de Resiliência:**](../testes/rbustez.js)
+- [**Link para o Gráfico de Resultados:**](../chart/4-resiliência.html)
 - [**Link para o Vídeo Tutorial:**](https://www.youtube.com/)

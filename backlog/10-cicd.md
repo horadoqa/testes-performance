@@ -33,3 +33,18 @@ jobs:
         with:
           path: testes/pizza.js
 ```
+
+
+```bash
+Run grafana/run-k6-action@v1
+🔍 Validating test run files.
+🧪 Found 1 valid K6 tests out of total 1 test files.
+  1. /home/runner/work/testes-performance/testes-performance/testes/pizza.js
+🤖 Running test: k6 run /home/runner/work/testes-performance/testes-performance/testes/pizza.js
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+```

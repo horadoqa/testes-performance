@@ -6,3 +6,30 @@
      - Dicas para integrar k6 em fluxos de trabalho de desenvolvimento ágil.
 
    **Link para vídeo:** [Integração com CI/CD](#)
+
+
+```yaml
+name: Continuos Integration
+run-name: Executado por ${{ github.actor }} em ${{ github.run_number }}
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup K6
+        uses: grafana/setup-k6-action@v1
+        
+      - name: Run local k6 test
+        uses: grafana/run-k6-action@v1
+        with:
+          path: testes/pizza.js
+```

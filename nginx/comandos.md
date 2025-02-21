@@ -136,4 +136,3 @@ Use este comando para monitorar os erros do servidor Nginx enquanto ele está em
 ## Conclusão
 
 Esses comandos são essenciais para gerenciar e manter o Nginx em funcionamento. Sempre teste a configuração após edições e utilize os logs para monitorar o tráfego e erros do servidor.
-

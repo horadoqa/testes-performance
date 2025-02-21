@@ -66,6 +66,12 @@ Antes de começar, certifique-se de que você tem o **k6** instalado na sua máq
 
 Contribuições são bem-vindas! Se você deseja melhorar a documentação, corrigir um erro ou adicionar um novo tipo de teste, basta criar um **pull request**. Antes de começar a contribuir, por favor, leia nosso guia de **contribuição**.
 
+Crie ou use umas das Branchs
+
+- nginx
+- testes
+- chart
+
 ## Licença
 
 Este projeto é licenciado sob a [MIT License](LICENSE).

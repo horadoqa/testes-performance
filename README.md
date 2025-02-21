@@ -9,7 +9,7 @@ O principal objetivo deste projeto é apresentar e documentar os **testes de per
 1. **Testes de Carga (Load Testing)**: Avaliar o comportamento do sistema sob uma carga esperada de usuários ou transações simultâneas.
 2. **Testes de Stress (Stress Testing)**: Identificar o ponto de falha do sistema, simulando condições extremas e além da capacidade máxima do sistema.
 3. **Testes de Picos (Spike Testing)**: Avaliar a resposta do sistema a picos súbitos e inesperados de tráfego.
-4. **Testes de Robustez (Endurance Testing)**: Testar a capacidade do sistema de manter um desempenho estável ao longo de um período prolongado.
+4. **Testes de Resiliência (Endurance Testing)**: Testar a capacidade do sistema de manter um desempenho estável ao longo de um período prolongado.
 5. **Testes de Escalabilidade (Scalability Testing)**: Avaliar a capacidade do sistema de crescer e lidar com aumentos na carga de trabalho, seja horizontal (adicionando mais servidores) ou vertical (aumentando recursos de hardware).
 6. **Testes de Volume (Volume Testing)**: Analisar o comportamento do sistema ao processar grandes volumes de dados.
 

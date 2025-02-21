@@ -52,10 +52,10 @@ Neste projeto, utilizamos as seguintes ferramentas para realizar os testes de pe
 
 ### Requisitos
 
-- **Visual Studio Code**: Para criar os testes
-- **NGINX**: Servidor WEB local
-- **VIM**: Para trabalhar com o NGINX
-- **k6**: Para executar os testes
+- [**Visual Studio Code**](https://code.visualstudio.com/download): Para criar os testes
+- [**NGINX**](./setup/nginx/0-nginx.md):Servidor WEB local
+- [**VIM**](./setup/vim/vim.md): Para trabalhar com o NGINX
+- [**k6**](./setup/k6/install.md): Para executar os testes
 
 ## Contribuições
 

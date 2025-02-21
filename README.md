@@ -47,8 +47,7 @@ Este projeto está estruturado em várias seções que cobrem os diferentes tipo
 Neste projeto, utilizamos as seguintes ferramentas para realizar os testes de performance:
 
 - **NGINX**: Um servidor web de código aberto, conhecido por sua alta performance, escalabilidade e baixo consumo de recursos.
-
-- **NGINX**: Uma das ferramentas mais populares para realizar testes de carga e performance em sistemas. Ele permite simular grandes volumes de tráfego e gerar relatórios detalhados sobre a performance do sistema.
+- **K6**: Uma das ferramentas mais populares para realizar testes de carga e performance em sistemas. Ele permite simular grandes volumes de tráfego e gerar relatórios detalhados sobre a performance do sistema.
 
 
 ### Requisitos
@@ -56,7 +55,7 @@ Neste projeto, utilizamos as seguintes ferramentas para realizar os testes de pe
 - **Visual Studio Code**: Para criar os testes
 - **NGINX**: Servidor WEB local
 - **VIM**: Para trabalhar com o NGINX
-- **NGINX**: Para executar os testes
+- **k6**: Para executar os testes
 
 ## Contribuições
 

@@ -1,7 +1,3 @@
-Aqui está uma versão melhorada da documentação:
-
----
-
 ### 3. **Criando o Primeiro Teste de Performance com k6**
 - **Objetivo:** Orientar o usuário a criar o primeiro script simples de teste de performance usando o k6.
 - **Conteúdo:**
@@ -20,10 +16,10 @@ Criar o seu primeiro teste de performance com o k6 é um ótimo ponto de partida
 1. **Criação da pasta e do arquivo de teste**
    - Abra o **VSCode** ou qualquer editor de texto de sua preferência.
    - Crie uma nova pasta para armazenar os testes, chamada, por exemplo, `testes`.
-   - Dentro dessa pasta, crie um arquivo chamado `carga.js`.
+   - Dentro dessa pasta, crie um arquivo chamado `stress.js`.
 
 2. **Escrevendo o script**
-   - Dentro do arquivo `carga.js`, cole o seguinte código:
+   - Dentro do arquivo `stress.js`, cole o seguinte código:
 
    ```javascript
    import http from 'k6/http';

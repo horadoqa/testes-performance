@@ -10,11 +10,11 @@ Este projeto tem como objetivo fornecer uma compreensão aprofundada dos **teste
 
 O principal objetivo deste projeto é apresentar e documentar os **testes de performance** mais comuns utilizados para garantir que sistemas e aplicações suportem o tráfego esperado e identifiquem falhas que podem ocorrer sob diferentes tipos de carga. O projeto cobre os seguintes tipos de testes:
 
-**Testes de Carga (Load Testing)**: 
-- Avaliar o comportamento do sistema sob uma carga esperada de usuários ou transações simultâneas.
-
 **Testes de Stress (Stress Testing)**: 
 - Identificar o ponto de falha do sistema, simulando condições extremas e além da capacidade máxima do sistema.
+
+**Testes de Carga (Load Testing)**: 
+- Avaliar o comportamento do sistema sob uma carga esperada de usuários ou transações simultâneas.
 
 **Testes de Picos (Spike Testing)**: 
 - Avaliar a resposta do sistema a picos súbitos e inesperados de tráfego.

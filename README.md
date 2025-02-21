@@ -23,7 +23,7 @@ Este projeto está estruturado em várias seções que cobrem os diferentes tipo
 - **Testes de Carga**: Como realizar testes de carga para verificar como o sistema se comporta sob uma carga esperada.
 - **Testes de Stress**: Como identificar os limites de falha de um sistema, simulando cargas extremas.
 - **Testes de Picos**: Avaliação da resposta do sistema a aumentos abruptos no tráfego.
-- **Testes de Robustez**: Como avaliar o desempenho do sistema em um longo período de tempo, simulando tráfego contínuo.
+- **Testes de Resiliência**: Como avaliar o desempenho do sistema em um longo período de tempo, simulando tráfego contínuo.
 - **Testes de Escalabilidade**: Como testar o sistema para verificar se ele pode escalar de acordo com a necessidade.
 - **Testes de Volume**: Como testar a capacidade do sistema para processar grandes quantidades de dados.
 

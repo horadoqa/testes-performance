@@ -2,6 +2,10 @@
 
 Este projeto tem como objetivo fornecer uma compreensão aprofundada dos **testes de performance** e suas diversas abordagens, abordando os diferentes tipos de testes usados para avaliar o comportamento e a robustez de sistemas e aplicações sob diferentes condições de carga.
 
+<div align="center">
+   <img src="./images/performance.png">
+</div>
+
 ## Objetivo do Projeto
 
 O principal objetivo deste projeto é apresentar e documentar os **testes de performance** mais comuns utilizados para garantir que sistemas e aplicações suportem o tráfego esperado e identifiquem falhas que podem ocorrer sob diferentes tipos de carga. O projeto cobre os seguintes tipos de testes:

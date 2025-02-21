@@ -10,12 +10,23 @@ Este projeto tem como objetivo fornecer uma compreensão aprofundada dos **teste
 
 O principal objetivo deste projeto é apresentar e documentar os **testes de performance** mais comuns utilizados para garantir que sistemas e aplicações suportem o tráfego esperado e identifiquem falhas que podem ocorrer sob diferentes tipos de carga. O projeto cobre os seguintes tipos de testes:
 
-1. **Testes de Carga (Load Testing)**: Avaliar o comportamento do sistema sob uma carga esperada de usuários ou transações simultâneas.
-2. **Testes de Stress (Stress Testing)**: Identificar o ponto de falha do sistema, simulando condições extremas e além da capacidade máxima do sistema.
-3. **Testes de Picos (Spike Testing)**: Avaliar a resposta do sistema a picos súbitos e inesperados de tráfego.
-4. **Testes de Resiliência (Endurance Testing)**: Testar a capacidade do sistema de manter um desempenho estável ao longo de um período prolongado.
-5. **Testes de Escalabilidade (Scalability Testing)**: Avaliar a capacidade do sistema de crescer e lidar com aumentos na carga de trabalho, seja horizontal (adicionando mais servidores) ou vertical (aumentando recursos de hardware).
-6. **Testes de Volume (Volume Testing)**: Analisar o comportamento do sistema ao processar grandes volumes de dados.
+**Testes de Carga (Load Testing)**: 
+- Avaliar o comportamento do sistema sob uma carga esperada de usuários ou transações simultâneas.
+
+**Testes de Stress (Stress Testing)**: 
+- Identificar o ponto de falha do sistema, simulando condições extremas e além da capacidade máxima do sistema.
+
+**Testes de Picos (Spike Testing)**: 
+- Avaliar a resposta do sistema a picos súbitos e inesperados de tráfego.
+
+**Testes de Resiliência (Endurance Testing)**: 
+- Testar a capacidade do sistema de manter um desempenho estável ao longo de um período prolongado.
+
+**Testes de Escalabilidade (Scalability Testing)**: 
+- Avaliar a capacidade do sistema de crescer e lidar com aumentos na carga de trabalho, seja horizontal (adicionando mais servidores) ou vertical (aumentando recursos de hardware).
+
+**Testes de Volume (Volume Testing)**: 
+- Analisar o comportamento do sistema ao processar grandes volumes de dados.
 
 ## Estrutura do Projeto
 
@@ -35,36 +46,17 @@ Este projeto está estruturado em várias seções que cobrem os diferentes tipo
 
 Neste projeto, utilizamos as seguintes ferramentas para realizar os testes de performance:
 
-- **k6**: Uma das ferramentas mais populares para realizar testes de carga e performance em sistemas. Ele permite simular grandes volumes de tráfego e gerar relatórios detalhados sobre a performance do sistema.
+- **NGINX**: Um servidor web de código aberto, conhecido por sua alta performance, escalabilidade e baixo consumo de recursos.
 
-## Como Rodar os Exemplos
+- **NGINX**: Uma das ferramentas mais populares para realizar testes de carga e performance em sistemas. Ele permite simular grandes volumes de tráfego e gerar relatórios detalhados sobre a performance do sistema.
+
 
 ### Requisitos
 
-Antes de começar, certifique-se de que você tem o **k6** instalado na sua máquina. Caso não tenha, você pode instalar o k6 seguindo as instruções disponíveis na [documentação oficial do k6](https://k6.io/docs/getting-started/).
-
-### Passos para Rodar os Exemplos
-
-1. Clone este repositório para o seu ambiente local:
-
-   ```bash
-   git clone https://github.com/horadoqa/testes-performance.git
-   cd testes-performance
-   ```
-
-2. Navegue até o diretório de um teste específico, por exemplo:
-
-   ```bash
-   cd testes
-   ```
-
-3. Execute o teste utilizando o k6. Por exemplo, para executar um teste de carga:
-
-   ```bash
-   k6 run carga.js
-   ```
-
-   O k6 irá simular o número de usuários definidos no script e gerar um relatório de performance.
+- **Visual Studio Code**: Para criar os testes
+- **NGINX**: Servidor WEB local
+- **VIM**: Para trabalhar com o NGINX
+- **NGINX**: Para executar os testes
 
 ## Contribuições
 

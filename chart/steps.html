@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Linhas</title>
+</head>
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'line',  // Tipo de gráfico - linha
+            data: {
+                labels: ['00:00', '00:01', '00:02', '00:03', '00:05', '00:05', '00:06', '00:07', '00:08', '00:09', '00:10'],  // Rótulos para cada ponto de dados
+                datasets: [{
+                    label: 'VUs',
+                    data: [0, 20, 20, 40, 40, 60, 60, 80, 80, 100, 100],  // Dados para a linha
+                    borderColor: 'rgba(75, 192, 192, 1)',  // Cor da linha
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Cor de fundo, opcional para preencher a área abaixo da linha
+                    borderWidth: 2,  // Largura da linha
+                    fill: false  // Não preencher a área abaixo da linha
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tempo em Minutos'  // Título do eixo X
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'VUs Total'  // Título do eixo Y
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

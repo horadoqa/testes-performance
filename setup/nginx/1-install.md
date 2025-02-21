@@ -20,6 +20,12 @@ Se você estiver utilizando uma distribuição baseada em Debian (como Ubuntu), 
    sudo apt install nginx
    ```
 
+3. Inicialize o NGINX
+
+   ```bash
+   sudo systemctl start nginx
+   ```
+
 ### Para Distribuições Baseadas em Red Hat (como CentOS ou Fedora)
 
 Se você estiver utilizando uma distribuição baseada em Red Hat (como CentOS ou Fedora), use os seguintes comandos:

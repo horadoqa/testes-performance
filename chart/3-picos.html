@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga</title>
+</head>
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        // Dados dos estágios
+        const stages = [
+            { duration: 60, target: 20 },      // Ramp-up Inicial
+            { duration: 90, target: 20 },      // Carga Estável Inicial
+            { duration: 30, target: 200 },     // Pico de Carga
+            { duration: 90, target: 20 },      // Carga Estável Pós-Pico
+            { duration: 30, target: 0 },       // Ramp-down
+        ];
+
+        // Gerar os dados do gráfico
+        let times = []; // Armazena os tempos (em segundos)
+        let users = []; // Armazena os usuários virtuais
+
+        let currentTime = 0;
+        stages.forEach(stage => {
+            for (let i = 0; i < stage.duration; i++) {
+                times.push(currentTime + i);
+                users.push(stage.target);
+            }
+            currentTime += stage.duration;
+        });
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: times,  // Tempo (em segundos)
+                datasets: [{
+                    label: '# VUs',
+                    data: users,  // Número de usuários em cada ponto de tempo
+                    borderWidth: 3,
+                    borderColor: 'rgb(75, 192, 192)',
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tempo (segundos)'
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Número de Usuários Virtuais (VUs)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

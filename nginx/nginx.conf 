@@ -1,0 +1,28 @@
+worker_processes 1;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    # Define o limite de requisições por segundo
+    limit_req_zone $binary_remote_addr zone=req_limit_per_ip:10m rate=70r/s;
+
+    server {
+        listen 80;
+
+        server_name localhost;
+
+        location / {
+            # Aplica o limite de requisições
+            limit_req zone=req_limit_per_ip burst=70 nodelay;
+
+            # Suas configurações de servidor aqui
+            root /var/www/html;
+            index index.html;
+            
+            # Outras configurações de local
+            try_files $uri $uri/ =404;
+        }
+    }
+}

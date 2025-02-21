@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga</title>
+</head>
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        // Dados dos estágios: vamos criar uma transição gradual para cada um
+        const stages = [
+            { duration: 60, start: 0, end: 200 },    // Ramp-up (0 até 200 em 60 segundos)
+            { duration: 240, start: 200, end: 200 }, // Carga Estável (200 por 240 segundos)
+            { duration: 30, start: 200, end: 0 },    // Ramp-down (200 até 0 em 30 segundos)
+        ];
+
+        // Gerar os dados do gráfico
+        let times = [];  // Armazena os tempos (em segundos)
+        let users = [];  // Armazena os usuários virtuais
+        let redLine = [];  // Linha vermelha começando com 75 usuários
+
+        let currentTime = 0;
+        let redLineValue = 75;  // Linha vermelha começa com 75
+
+        stages.forEach(stage => {
+            const step = (stage.end - stage.start) / stage.duration; // Diferença de usuários por segundo
+            for (let i = 0; i < stage.duration; i++) {
+                times.push(currentTime + i);
+                users.push(Math.round(stage.start + step * i)); // Calcula a quantidade de usuários em cada segundo
+                // Para a linha vermelha, aumentamos gradualmente após 75 usuários
+                if (users[users.length - 1] >= 75) {
+                    redLine.push(Math.min(redLineValue, users[users.length - 1]));
+                } else {
+                    redLine.push(75);  // A linha vermelha permanece em 75 até atingir esse valor
+                }
+            }
+            currentTime += stage.duration;
+        });
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: times,  // Tempo (em segundos)
+                datasets: [{
+                    label: '# VUs',
+                    data: users,  // Número de usuários em cada ponto de tempo
+                    borderWidth: 3,
+                    borderColor: 'rgb(75, 192, 192)', // Linha principal de usuários
+                    fill: false,
+                },
+                {
+                    label: 'Erros (Status Code 500)',
+                    data: redLine,  // Linha vermelha
+                    borderWidth: 3,
+                    borderColor: 'rgb(255, 0, 0)',  // Cor vermelha
+                    fill: false,
+                    borderDash: [5, 5],  // Linha tracejada
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tempo (segundos)'
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Número de Usuários Virtuais (VUs)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

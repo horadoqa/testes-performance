@@ -1,0 +1,71 @@
+---
+- name: Instalar k6 na instância Ubuntu via binário (v0.57.0)
+  hosts: k6
+  become: true
+  tasks:
+    - name: Atualizar o apt e instalar dependências
+      apt:
+        update_cache: yes
+        upgrade: yes
+        cache_valid_time: 3600
+
+    - name: Baixar o binário do k6 v0.57.0
+      get_url:
+        url: "https://github.com/grafana/k6/releases/download/v0.57.0/k6-v0.57.0-linux-amd64.tar.gz"
+        dest: /tmp/k6-v0.57.0-linux-amd64.tar.gz
+
+    - name: Extrair o arquivo tar.gz do k6
+      unarchive:
+        src: /tmp/k6-v0.57.0-linux-amd64.tar.gz
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Mover o binário do k6 para /usr/local/bin
+      command: mv /tmp/k6-v0.57.0-linux-amd64/k6 /usr/local/bin/k6
+
+    - name: Garantir que o binário do k6 tenha permissões de execução
+      file:
+        path: /usr/local/bin/k6
+        mode: '0755'
+
+    - name: Verificar a instalação do k6
+      command: k6 version
+      register: k6_version
+
+    - name: Mostrar a versão do k6
+      debug:
+        msg: "A versão do k6 instalada é: {{ k6_version.stdout }}"
+
+- name: Instalar Grafana na instância Ubuntu
+  hosts: grafana
+  become: true
+  tasks:
+    - name: Baixar a chave GPG do repositório Grafana
+      apt_key:
+        url: "https://packages.grafana.com/gpg.key"
+        state: present
+
+    - name: Adicionar o repositório do Grafana
+      apt_repository:
+        repo: "deb https://packages.grafana.com/oss/deb stable main"
+        state: present
+
+    - name: Atualizar o apt e instalar o Grafana
+      apt:
+        update_cache: yes
+        name: grafana
+        state: present
+
+    - name: Iniciar e habilitar o serviço Grafana
+      service:
+        name: grafana-server
+        state: started
+        enabled: yes
+
+    - name: Verificar a instalação do Grafana
+      command: grafana-server -v
+      register: grafana_version
+
+    - name: Mostrar a versão do Grafana
+      debug:
+        msg: "A versão do Grafana instalada é: {{ grafana_version.stdout }}"

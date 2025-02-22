@@ -1,4 +1,0 @@
-static_configs:
-       - targets: ['localhost:9100']
-
-# sed -i 's/9090/9100/' prometheus.yml

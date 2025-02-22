@@ -1,4 +1,4 @@
-**Plano de Teste de Performance para uma Página Web**
+# Plano de Teste de Performance para uma Página Web
 
 **Objetivo do Teste:**
 Avaliar a performance da página web sob diferentes condições de carga, verificando sua capacidade de lidar com múltiplos usuários simultâneos e identificar pontos de estrangulamento, latência ou falhas.
@@ -13,7 +13,7 @@ Avaliar a performance da página web sob diferentes condições de carga, verifi
 
 ### 2. **Requisitos de Teste:**
 - **Ferramentas de Teste de Performance:**
-  - JMeter, Gatling, LoadRunner, ou outra ferramenta de automação de carga.
+  - k6, ou outra ferramenta de automação de carga.
 - **Ambiente de Teste:**
   - O teste será realizado em um ambiente de staging (pré-produção) ou produção (com cautela).
   - Configuração do servidor (CPU, RAM, capacidade de rede).

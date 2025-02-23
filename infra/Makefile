@@ -25,12 +25,12 @@ plan-terraform:
 # Aplicar Terraform
 apply-terraform:
 	@echo "Aplicando Terraform..."
-	$(TF) -chdir=$(TF_DIR) apply -var-file=$(TF_VARS_FILE)
+	$(TF) -chdir=$(TF_DIR) apply --auto-approve -var-file=$(TF_VARS_FILE)
 
 # Destruir Terraform
 destroy-terraform:
 	@echo "Destruindo recursos Terraform..."
-	$(TF) -chdir=$(TF_DIR) destroy -var-file=$(TF_VARS_FILE)
+	$(TF) -chdir=$(TF_DIR) destroy --auto-approve -var-file=$(TF_VARS_FILE)
 
 # Inicializar o Ansible
 init-ansible:

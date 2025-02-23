@@ -186,6 +186,18 @@
         global: yes
         state: present
     
+    - name: Instalar dependências do Serverest
+      shell: npm install /usr/local/lib/node_modules/serverest
+      args:
+        chdir: /usr/local/lib/node_modules/serverest
+
+    - name: Iniciar o Serverest
+      shell: node /usr/local/lib/node_modules/serverest/src/server.js
+      args:
+        chdir: /usr/local/lib/node_modules/serverest
+      async: 600
+      poll: 0 
+    
     - name: Verificar a instalação do Serverest
       shell: serverest --version
       register: serverest_version
@@ -194,6 +206,10 @@
     - name: Exibir a versão do Serverest
       debug:
         msg: "A versão do Serverest é: {{ serverest_version.stdout }}"
+    
+    # - name: Exibir a saída do Serverest
+    #   debug:
+    #     msg: "{{ serverest_output.stdout }}"
 
     # Instalar Prometheus e Node Exporter no Serverest
     - name: Baixar e instalar o Prometheus no Serverest

@@ -8,16 +8,25 @@ resource "aws_security_group" "security_group" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Permitir de qualquer IP, ou use IP específico para k6
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Permitir tráfego na porta 3000 para o Grafana e o Serverest
+  ingress {
+    description = "Port 3000 for Grafana and Serverest"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
   # Permitir tráfego HTTPS (porta 443) para Serverest (se necessário)
   ingress {
     description = "Port 443 for Serverest (HTTPS)"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Ajustar conforme necessário para IPs específicos
+    cidr_blocks = ["${data.http.ip.response_body}/32"]  # Ajustar conforme necessário para IPs específicos
   }
 
   # Permitir acesso ao Prometheus (porta 9090)
@@ -38,15 +47,6 @@ resource "aws_security_group" "security_group" {
     cidr_blocks = ["0.0.0.0/0"]  # Ou limitar ao IP do Prometheus ou Grafana
   }
 
-  # Permitir acesso ao Grafana (porta 3000)
-  ingress {
-    description = "Grafana (porta 3000)"
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = ["${data.http.ip.response_body}/32"]  # Ou limitar ao IP de quem for acessar o Grafana
-  }
-
   # Permitir SSH apenas de um IP específico (substitua pelo seu IP)
   ingress {
     description = "SSH (porta 22) from My IP"
@@ -54,6 +54,15 @@ resource "aws_security_group" "security_group" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["${data.http.ip.response_body}/32"]
+  }
+
+  # Permitir tráfego ICMP (ping) de qualquer IP (ou pode restringir para o IP do k6)
+  ingress {
+    description = "Allow ICMP (ping) from k6 server"
+    from_port   = -1        # ICMP não usa portas específicas
+    to_port     = -1        # ICMP não usa portas específicas
+    protocol    = "icmp"    # Especificando o protocolo ICMP
+    cidr_blocks = ["172.31.34.213/32"]  # Substitua pelo IP da instância do k6
   }
 
   # Egress (permitir saída para qualquer destino)

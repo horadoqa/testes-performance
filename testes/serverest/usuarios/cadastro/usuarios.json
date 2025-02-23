@@ -1,0 +1,45 @@
+[
+    {
+      "nome": "Fulano da Silva",
+      "email": "beltrano@qa.com.br",
+      "password": "teste",
+      "administrador": "true"
+    },
+    {
+      "nome": "Maria Oliveira",
+      "email": "maria.oliveira@qa.com.br",
+      "password": "123456",
+      "administrador": "false"
+    },
+    {
+      "nome": "João Pereira",
+      "email": "joao.pereira@qa.com.br",
+      "password": "senha123",
+      "administrador": "true"
+    },
+    {
+      "nome": "Ana Souza",
+      "email": "ana.souza@qa.com.br",
+      "password": "abcdef",
+      "administrador": "false"
+    },
+    {
+      "nome": "Carlos Mendes",
+      "email": "carlos.mendes@qa.com.br",
+      "password": "qwerty",
+      "administrador": "true"
+    },
+    {
+      "nome": "Luciana Costa",
+      "email": "luciana.costa@qa.com.br",
+      "password": "senha456",
+      "administrador": "false"
+    },
+    {
+      "nome": "Rafael Santos",
+      "email": "rafael.santos@qa.com.br",
+      "password": "123qwe",
+      "administrador": "true"
+    }
+  ]
+  

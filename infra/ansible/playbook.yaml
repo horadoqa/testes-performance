@@ -36,6 +36,93 @@
       debug:
         msg: "A versão do k6 instalada é: {{ k6_version.stdout }}"
 
+    # Instalar Prometheus e Node Exporter no k6
+    - name: Baixar e instalar o Prometheus no k6
+      get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz"
+        dest: /tmp/prometheus-2.45.0.linux-amd64.tar.gz
+
+    - name: Extrair o arquivo tar.gz do Prometheus
+      unarchive:
+        src: /tmp/prometheus-2.45.0.linux-amd64.tar.gz
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Mover o binário do Prometheus para /usr/local/bin
+      command: mv /tmp/prometheus-2.45.0.linux-amd64/prometheus /usr/local/bin/prometheus
+
+    - name: Garantir que o binário do Prometheus tenha permissões de execução
+      file:
+        path: /usr/local/bin/prometheus
+        mode: '0755'
+
+    - name: Verificar a instalação do Prometheus
+      command: prometheus --version
+      register: prometheus_version
+
+    - name: Mostrar a versão do Prometheus
+      debug:
+        msg: "A versão do Prometheus instalada é: {{ prometheus_version.stdout }}"
+
+    - name: Instalar o Node Exporter
+      get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz"
+        dest: /tmp/node_exporter-1.6.1.linux-amd64.tar.gz
+
+    - name: Extrair o arquivo tar.gz do Node Exporter
+      unarchive:
+        src: /tmp/node_exporter-1.6.1.linux-amd64.tar.gz
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Mover o binário do Node Exporter para /usr/local/bin
+      command: mv /tmp/node_exporter-1.6.1.linux-amd64/node_exporter /usr/local/bin/node_exporter
+
+    - name: Garantir que o binário do Node Exporter tenha permissões de execução
+      file:
+        path: /usr/local/bin/node_exporter
+        mode: '0755'
+
+    - name: Verificar a instalação do Node Exporter
+      command: node_exporter --version
+      register: node_exporter_version
+
+    - name: Mostrar a versão do Node Exporter
+      debug:
+        msg: "A versão do Node Exporter instalada é: {{ node_exporter_version.stdout }}"
+
+    # Criar o arquivo de unidade do Node Exporter
+    - name: Criar arquivo de unidade do systemd para o Node Exporter
+      copy:
+        dest: /etc/systemd/system/node_exporter.service
+        content: |
+          [Unit]
+          Description=Prometheus Node Exporter
+          After=network.target
+
+          [Service]
+          User=root
+          ExecStart=/usr/local/bin/node_exporter
+
+          [Install]
+          WantedBy=multi-user.target
+      notify:
+        - Reiniciar o Node Exporter
+
+    # Habilitar e iniciar o Node Exporter
+    - name: Habilitar e iniciar o Node Exporter
+      systemd:
+        name: node_exporter
+        state: started
+        enabled: yes
+
+  # Notificação para reiniciar o Node Exporter
+  handlers:
+    - name: Reiniciar o Node Exporter
+      systemd:
+        name: node_exporter
+        state: restarted
+
 - name: Instalar Grafana na instância Ubuntu
   hosts: grafana
   become: true
@@ -69,3 +156,130 @@
     - name: Mostrar a versão do Grafana
       debug:
         msg: "A versão do Grafana instalada é: {{ grafana_version.stdout }}"
+
+
+- name: Instalar Serverest na instância Ubuntu
+  hosts: serverest
+  become: true
+  tasks:
+    - name: Atualizar o apt e instalar dependências
+      apt:
+        update_cache: yes
+        upgrade: yes
+        cache_valid_time: 3600
+
+    - name: Instalar Node.js e npm (necessário para o npx)
+      apt:
+        name:
+          - nodejs
+          - npm
+        state: present
+
+    - name: Instalar o Serverest usando npx
+      package:
+        name: npm
+        state: present
+    
+    - name: Instalar o Serverest globalmente
+      npm:
+        name: serverest
+        global: yes
+        state: present
+    
+    - name: Verificar a instalação do Serverest
+      shell: serverest --version
+      register: serverest_version
+      ignore_errors: yes
+    
+    - name: Exibir a versão do Serverest
+      debug:
+        msg: "A versão do Serverest é: {{ serverest_version.stdout }}"
+
+    # Instalar Prometheus e Node Exporter no Serverest
+    - name: Baixar e instalar o Prometheus no Serverest
+      get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz"
+        dest: /tmp/prometheus-2.45.0.linux-amd64.tar.gz
+
+    - name: Extrair o arquivo tar.gz do Prometheus
+      unarchive:
+        src: /tmp/prometheus-2.45.0.linux-amd64.tar.gz
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Mover o binário do Prometheus para /usr/local/bin
+      command: mv /tmp/prometheus-2.45.0.linux-amd64/prometheus /usr/local/bin/prometheus
+
+    - name: Garantir que o binário do Prometheus tenha permissões de execução
+      file:
+        path: /usr/local/bin/prometheus
+        mode: '0755'
+
+    - name: Verificar a instalação do Prometheus
+      command: prometheus --version
+      register: prometheus_version
+
+    - name: Mostrar a versão do Prometheus
+      debug:
+        msg: "A versão do Prometheus instalada é: {{ prometheus_version.stdout }}"
+
+    - name: Instalar o Node Exporter
+      get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz"
+        dest: /tmp/node_exporter-1.6.1.linux-amd64.tar.gz
+
+    - name: Extrair o arquivo tar.gz do Node Exporter
+      unarchive:
+        src: /tmp/node_exporter-1.6.1.linux-amd64.tar.gz
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Mover o binário do Node Exporter para /usr/local/bin
+      command: mv /tmp/node_exporter-1.6.1.linux-amd64/node_exporter /usr/local/bin/node_exporter
+
+    - name: Garantir que o binário do Node Exporter tenha permissões de execução
+      file:
+        path: /usr/local/bin/node_exporter
+        mode: '0755'
+
+    - name: Verificar a instalação do Node Exporter
+      command: node_exporter --version
+      register: node_exporter_version
+
+    - name: Mostrar a versão do Node Exporter
+      debug:
+        msg: "A versão do Node Exporter instalada é: {{ node_exporter_version.stdout }}"
+
+    # Criar o arquivo de unidade do Node Exporter
+    - name: Criar arquivo de unidade do systemd para o Node Exporter
+      copy:
+        dest: /etc/systemd/system/node_exporter.service
+        content: |
+          [Unit]
+          Description=Prometheus Node Exporter
+          After=network.target
+
+          [Service]
+          User=root
+          ExecStart=/usr/local/bin/node_exporter
+
+          [Install]
+          WantedBy=multi-user.target
+      notify:
+        - Reiniciar o Node Exporter
+
+    # Habilitar e iniciar o Node Exporter
+    - name: Habilitar e iniciar o Node Exporter
+      systemd:
+        name: node_exporter
+        state: started
+        enabled: yes
+
+  # Notificação para reiniciar o Node Exporter
+  handlers:
+    - name: Reiniciar o Node Exporter
+      systemd:
+        name: node_exporter
+        state: restarted
+
+       

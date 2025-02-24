@@ -1,0 +1,61 @@
+- name: Baixar e instalar o Prometheus
+  get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/{{ prometheus_version }}/prometheus-{{ prometheus_version }}-linux-amd64.tar.gz"
+    dest: /tmp/prometheus-{{ prometheus_version }}-linux-amd64.tar.gz
+
+- name: Extrair o arquivo tar.gz do Prometheus
+  unarchive:
+    src: /tmp/prometheus-{{ prometheus_version }}-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Mover o binário do Prometheus para /usr/local/bin
+  command: mv /tmp/prometheus-{{ prometheus_version }}-linux-amd64/prometheus /usr/local/bin/prometheus
+
+- name: Garantir que o binário do Prometheus tenha permissões de execução
+  file:
+    path: /usr/local/bin/prometheus
+    mode: '0755'
+
+- name: Verificar a instalação do Prometheus
+  command: prometheus --version
+  register: prometheus_version_output
+
+- name: Alterar Localhost por 0.0.0.0
+  shell: sed -i 's/localhost:9090/0.0.0.0:9090/' /tmp/prometheus-{{ prometheus_version }}-linux-amd64/prometheus.yml
+
+- name: Criar pasta data
+  shell: mkdir -p /tmp/prometheus-{{ prometheus_version }}-linux-amd64/data
+
+- name: Dar permissão à pasta
+  shell: chown -R ubuntu:ubuntu /tmp/prometheus-{{ prometheus_version }}-linux-amd64
+
+- name: Configurar o prometheus.yaml
+  shell: nohup prometheus --config.file=/tmp/prometheus-{{ prometheus_version }}-linux-amd64/prometheus.yml --storage.tsdb.path=/tmp/prometheus-{{ prometheus_version }}-linux-amd64/data/ > /tmp/prometheus.log 2>&1 &
+
+- name: Instalar o Node Exporter
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}-linux-amd64.tar.gz"
+    dest: /tmp/node_exporter-{{ node_exporter_version }}-linux-amd64.tar.gz
+
+- name: Extrair o arquivo tar.gz do Node Exporter
+  unarchive:
+    src: /tmp/node_exporter-{{ node_exporter_version }}-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Mover o binário do Node Exporter para /usr/local/bin
+  command: mv /tmp/node_exporter-{{ node_exporter_version }}-linux-amd64/node_exporter /usr/local/bin/node_exporter
+
+- name: Garantir que o binário do Node Exporter tenha permissões de execução
+  file:
+    path: /usr/local/bin/node_exporter
+    mode: '0755'
+
+- name: Verificar a instalação do Node Exporter
+  command: node_exporter --version
+  register: node_exporter_version_output
+
+- name: Mostrar a versão do Node Exporter
+  debug:
+    msg: "A versão do Node Exporter instalada é: {{ node_exporter_version_output.stdout }}"

@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check } from 'k6';
 
 // URL da API para obter a lista de usuários
-const url = 'https://<IP>/usuarios';
+const url = 'https://34.229.246.171/usuarios';
 
 // Cabeçalhos da requisição
 const headers = {

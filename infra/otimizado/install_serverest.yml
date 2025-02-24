@@ -1,0 +1,31 @@
+- name: Instalar o Serverest usando npx
+  package:
+    name: npm
+    state: present
+
+- name: Instalar o Serverest globalmente
+  npm:
+    name: serverest
+    global: yes
+    state: present
+
+- name: Instalar dependências do Serverest
+  shell: npm install /usr/local/lib/node_modules/serverest
+  args:
+    chdir: /usr/local/lib/node_modules/serverest
+
+- name: Iniciar o Serverest
+  shell: nohup node /usr/local/lib/node_modules/serverest/src/server.js > ~/serverest.log 2>&1 &
+  args:
+    chdir: /usr/local/lib/node_modules/serverest
+  async: 600
+  poll: 0
+
+- name: Verificar a instalação do Serverest
+  shell: serverest --version
+  register: serverest_version_output
+  ignore_errors: yes
+
+- name: Exibir a versão do Serverest
+  debug:
+    msg: "A versão do Serverest é: {{ serverest_version_output.stdout }}"

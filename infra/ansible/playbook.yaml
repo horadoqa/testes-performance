@@ -35,6 +35,26 @@
     - name: Mostrar a versão do k6
       debug:
         msg: "A versão do k6 instalada é: {{ k6_version.stdout }}"
+    
+    # Instalar InfluxDB no servidor k6
+    - name: Baixar e instalar o InfluxDB
+      apt:
+        name: influxdb
+        state: present
+
+    - name: Iniciar e habilitar o serviço InfluxDB
+      service:
+        name: influxdb
+        state: started
+        enabled: yes
+
+    - name: Verificar a instalação do InfluxDB
+      command: influxd version
+      register: influxdb_version
+
+    - name: Mostrar a versão do InfluxDB
+      debug:
+        msg: "A versão do InfluxDB instalada é: {{ influxdb_version.stdout }}"
 
     # Instalar Prometheus e Node Exporter no k6
     - name: Baixar e instalar o Prometheus no k6
@@ -135,6 +155,18 @@
         name: node_exporter
         state: restarted
 
+- name: Copiar arquivos para a instância AWS
+  hosts: k6
+  become: yes
+  tasks:
+    - name: Copiar arquivos da pasta local para a instância AWS
+      copy:
+        src: /home/rfahham/projetos/testes-performance/testes/serverest
+        # src: ../testes/serverest
+        dest: /tmp/serverest
+        mode: '0755'
+        remote_src: no
+        
 - name: Instalar Grafana na instância Ubuntu
   hosts: grafana
   become: true

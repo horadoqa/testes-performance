@@ -3,6 +3,7 @@ TF_DIR = terraform
 ANSIBLE_DIR = ansible
 TF_VARS_FILE = terraform.tfvars
 ANSIBLE_PLAYBOOK = ansible/playbook.yaml
+ANSIBLE_PLAYBOOK_OTIMIZADO = ansible/otimizado/playbook.yaml
 ANSIBLE_INVENTORY = ansible/hosts.ini
 AWS_DOCS = aws/aws.md
 SG_DOCS = terraform/sg.md
@@ -42,6 +43,11 @@ run-ansible:
 	@echo "Executando playbook Ansible..."
 	ANSIBLE_HOST_KEY_CHECKING=False $(ANSIBLE) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK)
 
+# Executar o playbook otimizado do Ansible
+run-ansible-otimizado:
+	@echo "Executando playbook otimizado Ansible..."
+	ANSIBLE_HOST_KEY_CHECKING=False $(ANSIBLE) -i $(ANSIBLE_INVENTORY) $(ANSIBLE_PLAYBOOK)
+
 # Comando para rodar o Terraform e o Ansible em sequência
 deploy:
 	@echo "Inicializando e aplicando Terraform..."
@@ -78,6 +84,7 @@ help:
 	@echo "  make destroy-terraform       - Executa o comando 'terraform destroy'."
 	@echo "  make init-ansible            - Inicializa o ambiente do Ansible."
 	@echo "  make run-ansible             - Executa o playbook do Ansible."
+	@echo "  make run-ansible-otimizado   - Executa o playbook otimizado do Ansible."
 	@echo "  make deploy                  - Roda o Terraform e o Ansible em sequência."
 	@echo "  make destroy                 - Roda o Terraform e o Ansible para destruir a infraestrutura."
 	@echo "  make clean                   - Limpa os arquivos de estado do Terraform."

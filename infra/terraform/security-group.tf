@@ -38,6 +38,15 @@ resource "aws_security_group" "security_group" {
     cidr_blocks = ["0.0.0.0/0"]  # Ou limitar ao IP do Grafana, por exemplo
   }
 
+  # Permitir acesso ao InfluxDB (porta 8086)
+  ingress {
+    description = "InfluxDB (porta 8086)"
+    from_port   = 8086
+    to_port     = 8086
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Permitir acesso ao Node Exporter (porta 9100)
   ingress {
     description = "Node Exporter (porta 9100)"

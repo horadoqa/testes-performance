@@ -60,6 +60,18 @@
       command: prometheus --version
       register: prometheus_version
 
+    - name: Alterar Localhost por 0.0.0.0
+      shell: sed -i 's/localhost:9090/0.0.0.0:9090/' /tmp/prometheus-2.45.0.linux-amd64/prometheus.yml
+
+    - name: Criar pasta data
+      shell: sudo mkdir -p /tmp/prometheus-2.45.0.linux-amd64/data
+
+    - name: Dar permissão a pasta
+      shell: sudo chown -R ubuntu:ubuntu /tmp/prometheus-2.45.0.linux-amd64
+
+    - name: Configurar o prometheus.yaml
+      shell: nohup prometheus --config.file=/tmp/prometheus-2.45.0.linux-amd64/prometheus.yml --storage.tsdb.path=/tmp/prometheus-2.45.0.linux-amd64/data/ > /tmp/prometheus.log 2>&1 & 
+
     - name: Mostrar a versão do Prometheus
       debug:
         msg: "A versão do Prometheus instalada é: {{ prometheus_version.stdout }}"
@@ -192,7 +204,8 @@
         chdir: /usr/local/lib/node_modules/serverest
 
     - name: Iniciar o Serverest
-      shell: node /usr/local/lib/node_modules/serverest/src/server.js
+      # shell: node /usr/local/lib/node_modules/serverest/src/server.js
+      shell: sudo nohup node /usr/local/lib/node_modules/serverest/src/server.js > ~/serverest.log 2>&1 &
       args:
         chdir: /usr/local/lib/node_modules/serverest
       async: 600
@@ -234,6 +247,18 @@
     - name: Verificar a instalação do Prometheus
       command: prometheus --version
       register: prometheus_version
+    
+    - name: Alterar Localhost por 0.0.0.0
+      shell: sed -i 's/localhost:9090/0.0.0.0:9090/' /tmp/prometheus-2.45.0.linux-amd64/prometheus.yml
+
+    - name: Criar pasta data
+      shell: sudo mkdir -p /tmp/prometheus-2.45.0.linux-amd64/data
+
+    - name: Dar permissão a pasta
+      shell: sudo chown -R ubuntu:ubuntu /tmp/prometheus-2.45.0.linux-amd64
+
+    - name: Configurar o prometheus.yaml
+      shell: nohup prometheus --config.file=/tmp/prometheus-2.45.0.linux-amd64/prometheus.yml --storage.tsdb.path=/tmp/prometheus-2.45.0.linux-amd64/data/ > /tmp/prometheus.log 2>&1 & 
 
     - name: Mostrar a versão do Prometheus
       debug:

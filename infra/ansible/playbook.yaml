@@ -163,7 +163,7 @@
       copy:
         src: /home/rfahham/projetos/testes-performance/testes/serverest
         # src: ../testes/serverest
-        dest: /tmp/serverest
+        dest: /tmp
         mode: '0755'
         remote_src: no
         

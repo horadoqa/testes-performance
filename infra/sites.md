@@ -5,7 +5,7 @@
 http://<IP PUBLICO>:3000/login
 
 ```bash
-curl -I http://13.216.245.44:3000/login
+curl -I http://<IP PUBLICO>:3000/login
 
 HTTP/1.1 200 OK
 Cache-Control: no-store
@@ -18,10 +18,17 @@ Date: Sun, 23 Feb 2025 22:00:05 GMT
 
 ## Serverest
 
-http://<IP PUBLICO>:3000
+http://<IP PUBLICO do Serverest>:3000
+
+### LOGIN
 
 ```bash
-curl -I http://52.90.196.143:3000
+curl -X 'POST' 'http://<IP PUBLICO do Serverest>:3000/login' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"email": "fulano@qa.com",  "password": "teste" }'
+```
+
+
+```bash
+curl -I http://<IP PUBLICO do Serverest>:3000
 
 HTTP/1.1 200 OK
 Access-Control-Allow-Origin: *
@@ -40,10 +47,10 @@ Keep-Alive: timeout=5
 
 ## Influxd
 
-http://<IP PUBLICO K6>:8086
+http://<IP PUBLICO do K6>:8086
 
 ```bash
-curl -I http://<IP PUBLICO K6>:8086
+curl -I http://<IP PUBLICO do K6>:8086
 ```
 
 ## Prometheus

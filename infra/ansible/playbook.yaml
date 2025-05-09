@@ -1,5 +1,5 @@
 ---
-- name: Instalar k6 na instância Ubuntu via binário (v0.57.0)
+- name: Instalar k6 na instância Ubuntu via binário (v1.0.0)
   hosts: k6
   become: true
   tasks:
@@ -9,19 +9,19 @@
         upgrade: yes
         cache_valid_time: 3600
 
-    - name: Baixar o binário do k6 v0.57.0
+    - name: Baixar o binário do k6 v1.0.0
       get_url:
-        url: "https://github.com/grafana/k6/releases/download/v0.57.0/k6-v0.57.0-linux-amd64.tar.gz"
-        dest: /tmp/k6-v0.57.0-linux-amd64.tar.gz
+        url: "https://github.com/grafana/k6/releases/download/v1.0.0/k6-v1.0.0-linux-amd64.tar.gz"
+        dest: /tmp/k6-v1.0.0-linux-amd64.tar.gz
 
     - name: Extrair o arquivo tar.gz do k6
       unarchive:
-        src: /tmp/k6-v0.57.0-linux-amd64.tar.gz
+        src: /tmp/k6-v1.0.0-linux-amd64.tar.gz
         dest: /tmp/
         remote_src: yes
 
     - name: Mover o binário do k6 para /usr/local/bin
-      command: mv /tmp/k6-v0.57.0-linux-amd64/k6 /usr/local/bin/k6
+      command: mv /tmp/k6-v1.0.0-linux-amd64/k6 /usr/local/bin/k6
 
     - name: Garantir que o binário do k6 tenha permissões de execução
       file:

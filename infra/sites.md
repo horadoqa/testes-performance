@@ -2,8 +2,6 @@
 
 ## Grafana
 
-http://<IP PUBLICO>:3000/login
-
 ```bash
 curl -I http://<IP PUBLICO>:3000/login
 
@@ -13,12 +11,18 @@ Content-Type: text/html; charset=UTF-8
 X-Content-Type-Options: nosniff
 X-Frame-Options: deny
 X-Xss-Protection: 1; mode=block
-Date: Sun, 23 Feb 2025 22:00:05 GMT
+Date: Fri, 09 May 2025 22:19:02 GMT
 ```
+
+
+## InfluxDB
+
+http://<IP PUBLICO do InfluxDB>:8086
+
 
 ## Serverest
 
-http://<IP PUBLICO do Serverest>:3000
+http://54.91.224.135:3000
 
 ### LOGIN
 

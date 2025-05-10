@@ -61,7 +61,6 @@ destroy:
 	@echo "Destruindo infraestrutura com Terraform..."
 	$(MAKE) destroy-terraform
 	@echo "Executando Ansible para limpar configuração..."
-	$(MAKE) run-ansible
 
 # Limpeza do estado do Terraform
 clean:

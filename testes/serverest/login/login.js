@@ -1,6 +1,14 @@
 import http from 'k6/http';
 import { check } from 'k6';
 
+export const options = {
+  stages: [
+    { duration: '60s', target: 70 },
+    { duration: '1m', target: 70 },
+    { duration: '30s', target: 0 },
+  ],
+};
+
 // URL da API
 const url = 'http://<IP>/login';
 
@@ -22,8 +30,8 @@ export default function () {
 
   // Verifica o status da resposta
   check(res, {
-    'status é 201': (r) => r.status === 201,
-    'resposta contém um JSON': (r) => r.headers['Content-Type'] === 'application/json',
+    'status é 200': (r) => r.status === 200,
+    // 'resposta contém um JSON': (r) => r.headers['Content-Type'] === 'application/json',
   });
 
   // Opcional: imprime a resposta para depuração

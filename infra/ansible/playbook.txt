@@ -218,11 +218,6 @@
           - nodejs
           - npm
         state: present
-
-    - name: Instalar o Serverest usando npx
-      package:
-        name: npm
-        state: present
     
     - name: Instalar o Serverest globalmente
       npm:

@@ -92,171 +92,91 @@
 
 
 
-# - name: Instalar k6
-#   hosts: k6
-#   become: true
-#   tasks:
-#     - name: Baixar o binário do k6 v1.0.0
-#       get_url:
-#         url: "https://github.com/grafana/k6/releases/download/v1.0.0/k6-v1.0.0-linux-amd64.tar.gz"
-#         dest: /tmp/k6-v1.0.0-linux-amd64.tar.gz
+- name: Instalar k6
+  hosts: k6
+  become: true
+  tasks:
+    - name: Baixar o binário do k6 v1.0.0
+      get_url:
+        url: "https://github.com/grafana/k6/releases/download/v1.0.0/k6-v1.0.0-linux-amd64.tar.gz"
+        dest: /tmp/k6-v1.0.0-linux-amd64.tar.gz
 
-#     - name: Extrair o k6
-#       unarchive:
-#         src: /tmp/k6-v1.0.0-linux-amd64.tar.gz
-#         dest: /tmp/
-#         remote_src: yes
+    - name: Extrair o k6
+      unarchive:
+        src: /tmp/k6-v1.0.0-linux-amd64.tar.gz
+        dest: /tmp/
+        remote_src: yes
 
-#     - name: Mover binário k6 para /usr/local/bin
-#       command: mv /tmp/k6-v1.0.0-linux-amd64/k6 /usr/local/bin/k6
+    - name: Mover binário k6 para /usr/local/bin
+      command: mv /tmp/k6-v1.0.0-linux-amd64/k6 /usr/local/bin/k6
 
-#     - name: Ajustar permissões do binário k6
-#       file:
-#         path: /usr/local/bin/k6
-#         mode: '0755'
+    - name: Ajustar permissões do binário k6
+      file:
+        path: /usr/local/bin/k6
+        mode: '0755'
 
-#     - name: Verificar a instalação do k6
-#       command: k6 version
-#       register: k6_version
+    - name: Verificar a instalação do k6
+      command: k6 version
+      register: k6_version
 
-#     - name: Mostrar a versão do k6
-#       debug:
-#         msg: "A versão do k6 instalada é: {{ k6_version.stdout }}"
+    - name: Mostrar a versão do k6
+      debug:
+        msg: "A versão do k6 instalada é: {{ k6_version.stdout }}"
 
-#    
+- name: Copiar arquivos para a instância k6
+  hosts: k6
+  become: true
+  tasks:
+    - name: Copiar arquivos da pasta local para a instância
+      copy:
+        src: /home/rfahham/projetos/testes-performance/testes/serverest
+        dest: /tmp
+        mode: '0755'
+        remote_src: no
 
-# - name: Copiar arquivos para a instância k6
-#   hosts: k6
-#   become: true
-#   tasks:
-#     - name: Copiar arquivos da pasta local para a instância
-#       copy:
-#         src: /home/rfahham/projetos/testes-performance/testes/serverest
-#         dest: /tmp
-#         mode: '0755'
-#         remote_src: no
+- name: Instalar Serverest
+  hosts: serverest
+  become: true
+  tasks:
+    - name: Atualizar cache do apt
+      apt:
+        update_cache: yes
 
-# - name: Instalar Grafana e configurar fonte de dados via API
-#   hosts: grafana
-#   become: true
-#   vars:
-#     grafana_user: admin
-#     grafana_password: admin
-#     grafana_api_key: "Bearer {{ grafana_api_key }}"  # Defina sua chave API do Grafana
-#     influxdb_url: "http://<IP-da-instancia-k6>:8086"
-#     influxdb_org: horadoqa
-#     influxdb_bucket: k6
-#     influxdb_token: meu-token-superseguro
-#   tasks:
-#     - name: Adicionar chave GPG Grafana
-#       apt_key:
-#         url: "https://packages.grafana.com/gpg.key"
-#         state: present
+    - name: Atualizar todos os pacotes do sistema
+      apt:
+        upgrade: dist
 
-#     - name: Adicionar repositório Grafana
-#       apt_repository:
-#         repo: "deb https://packages.grafana.com/oss/deb stable main"
-#         state: present
+    - name: Instalar Node.js e npm
+      apt:
+        name:
+          - nodejs
+          - npm
+        state: present
 
-#     - name: Instalar Grafana
-#       apt:
-#         update_cache: yes
-#         name: grafana
-#         state: present
 
-#     - name: Iniciar e habilitar Grafana
-#       service:
-#         name: grafana-server
-#         state: started
-#         enabled: yes
+    - name: Instalar Serverest globalmente
+      npm:
+        name: serverest
+        global: yes
+        state: present
 
-#     - name: Esperar Grafana responder na porta 3000
-#       uri:
-#         url: http://localhost:3000/login
-#         method: GET
-#         status_code: 200
-#       register: grafana_up
-#       retries: 10
-#       delay: 5
-#       until: grafana_up.status == 200
+    - name: Instalar dependências do Serverest
+      shell: npm install /usr/local/lib/node_modules/serverest
+      args:
+        chdir: /usr/local/lib/node_modules/serverest
 
-#     - name: Criar datasource InfluxDB v2 no Grafana via API
-#       uri:
-#         url: "http://localhost:3000/api/datasources"
-#         method: POST
-#         headers:
-#           Content-Type: application/json
-#           Authorization: "{{ grafana_api_key }}"
-#         body:
-#           {
-#             "name": "InfluxDB",
-#             "type": "influxdb",
-#             "url": "{{ influxdb_url }}",
-#             "access": "proxy",
-#             "basicAuth": false,
-#             "jsonData": {
-#               "version": "Flux",
-#               "organization": "{{ influxdb_org }}",
-#               "defaultBucket": "{{ influxdb_bucket }}"
-#             },
-#             "secureJsonData": {
-#               "token": "{{ influxdb_token }}"
-#             }
-#           }
-#         status_code: 200
+    - name: Iniciar o Serverest
+      shell: nohup node /usr/local/lib/node_modules/serverest/src/server.js > ~/serverest.log 2>&1 &
+      args:
+        chdir: /usr/local/lib/node_modules/serverest
+      async: 600
+      poll: 0
 
-#     - name: Importar dashboard público do k6 no Grafana via API
-#       uri:
-#         url: "http://localhost:3000/api/dashboards/import"
-#         method: POST
-#         headers:
-#           Content-Type: application/json
-#           Authorization: "{{ grafana_api_key }}"
-#         body:
-#           {
-#             "dashboard": {
-#               "id": 2587
-#             },
-#             "overwrite": true
-#           }
-#         status_code: 200
+    - name: Verificar a instalação do Serverest
+      shell: serverest --version
+      register: serverest_version
+      ignore_errors: yes
 
-# - name: Instalar Serverest
-#   hosts: serverest
-#   become: true
-#   tasks:
-#     - name: Atualizar apt e instalar Node.js
-#       apt:
-#         update_cache: yes
-#         upgrade: yes
-#         name:
-#           - nodejs
-#           - npm
-#         state: present
-
-#     - name: Instalar Serverest globalmente
-#       npm:
-#         name: serverest
-#         global: yes
-#         state: present
-
-#     - name: Instalar dependências do Serverest
-#       shell: npm install /usr/local/lib/node_modules/serverest
-#       args:
-#         chdir: /usr/local/lib/node_modules/serverest
-
-#     - name: Iniciar o Serverest
-#       shell: nohup node /usr/local/lib/node_modules/serverest/src/server.js > ~/serverest.log 2>&1 &
-#       args:
-#         chdir: /usr/local/lib/node_modules/serverest
-#       async: 600
-#       poll: 0
-
-#     - name: Verificar a instalação do Serverest
-#       shell: serverest --version
-#       register: serverest_version
-#       ignore_errors: yes
-
-#     - name: Exibir versão do Serverest
-#       debug:
-#         msg: "A versão do Serverest é: {{ serverest_version.stdout }}"
+    - name: Exibir versão do Serverest
+      debug:
+        msg: "A versão do Serverest é: {{ serverest_version.stdout }}"
